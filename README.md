@@ -1,2 +1,4 @@
 # unveil
 unveil for linux, using ptrace
+
+To use unveil, you compile the "ptracer" program with compile.sh. Then, instead of running your program directly, you run it with ptracer. If you want to run example with no arguments, you call "./ptracer example", if you call with arguments, it will be like this: "./ptracer example arg1 arg2". When you run your program, ptracer does nothing until your program calls the unveil function. When the unveil function in unveilptrace.c is called, your program informs ptracer, via IPC, which files it wants to access. Then, ptracer checks every system call made by your program. If the system call is openat, it checks which file it's trying to open. If the file is not one of the files your program informed ptracer about via unveil, ptracer terminates your program in a way that cannot be prevented.
